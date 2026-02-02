@@ -1,0 +1,68 @@
+
+import React from 'react';
+
+const AboutPage: React.FC = () => {
+  return (
+    <div className="max-w-4xl mx-auto space-y-12 py-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
+      <section className="text-center space-y-4">
+        <div className="text-6xl mb-6 inline-block">🎓</div>
+        <h1 className="text-4xl font-black text-gray-900 tracking-tight">About CodeSage AI</h1>
+        <p className="text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto">
+          Empowering the next generation of developers through intelligent, personalized, and accessible programming education.
+        </p>
+      </section>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="bg-white p-8 rounded-3xl border shadow-sm">
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">Our Mission</h2>
+          <p className="text-gray-600 leading-relaxed">
+            We believe that learning to code shouldn't be intimidating. CodeSage AI leverages the latest advancements in Artificial Intelligence to provide a tutor that never sleeps, never loses patience, and always speaks your language. 
+          </p>
+        </div>
+        <div className="bg-white p-8 rounded-3xl border shadow-sm">
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">How it Works</h2>
+          <p className="text-gray-600 leading-relaxed">
+            By combining a structured curriculum with Gemini's reasoning capabilities, we create a dynamic learning environment that adapts to your unique questions and pace.
+          </p>
+        </div>
+      </div>
+
+      <section className="bg-indigo-600 rounded-[3rem] p-10 md:p-16 text-white text-center shadow-2xl relative overflow-hidden">
+        <div className="relative z-10 space-y-8">
+          <div className="space-y-4">
+            <h2 className="text-3xl md:text-4xl font-black">Relax & Level Up with Mr. Yakeee</h2>
+            <p className="text-indigo-100 text-lg md:text-xl max-w-xl mx-auto leading-relaxed">
+              Finished your coding session? Take a break and check out our partner for epic gaming highlights, entertainment, and top-tier gameplay content.
+            </p>
+          </div>
+          
+          <a 
+            href="https://www.youtube.com/@mr.yakeee" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-3 bg-white text-indigo-600 px-10 py-5 rounded-2xl font-black text-xl hover:bg-indigo-50 transition-all shadow-xl hover:scale-105 active:scale-95"
+          >
+            <svg className="w-8 h-8 fill-red-600" viewBox="0 0 24 24">
+              <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
+            </svg>
+            Watch Mr. Yakeee
+          </a>
+          
+          <div className="text-indigo-200 text-sm font-medium">
+            Gaming & Entertainment: youtube.com/@mr.yakeee
+          </div>
+        </div>
+        
+        {/* Decorative Circles */}
+        <div className="absolute -top-20 -left-20 w-64 h-64 bg-white/10 rounded-full blur-3xl" />
+        <div className="absolute -bottom-20 -right-20 w-80 h-80 bg-indigo-400/20 rounded-full blur-3xl" />
+      </section>
+
+      <footer className="text-center text-gray-400 text-sm py-8">
+        <p>&copy; {new Date().getFullYear()} CodeSage AI. All rights reserved.</p>
+      </footer>
+    </div>
+  );
+};
+
+export default AboutPage;
