@@ -1,194 +1,125 @@
 
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { UserProgress } from '../types';
-import { LESSONS, LANGUAGE_DETAILS, ACHIEVEMENTS } from '../constants';
+import { ACHIEVEMENTS, LANGUAGE_DETAILS, LESSONS } from '../constants';
 
-interface DashboardProps {
-  progress: UserProgress;
-}
-
-const Dashboard: React.FC<DashboardProps> = ({ progress }) => {
+const Dashboard: React.FC<{ progress: UserProgress }> = ({ progress }) => {
   const navigate = useNavigate();
-  
-  const selectedLang = progress.selectedLanguage;
-  const langData = selectedLang ? (progress.languageData[selectedLang] || { completedLessons: [], quizScores: {} }) : null;
-  const unlockedAchievements = progress.unlockedAchievements || [];
+  const lang = progress.selectedLanguage;
+  const streak = progress.streak.current;
 
-  if (!selectedLang || !langData) {
-    return (
-      <div className="text-center py-20 animate-in fade-in duration-700">
-        <div className="text-6xl mb-6">🤔</div>
-        <h2 className="text-3xl font-bold mb-4">No Language Selected</h2>
-        <p className="text-gray-600 mb-8">Choose a programming language to start your journey.</p>
-        <button 
-          onClick={() => navigate('/select-language')}
-          className="bg-indigo-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-indigo-700 transition-all shadow-lg hover:shadow-indigo-100"
-        >
-          Select Language
-        </button>
-      </div>
-    );
-  }
-
-  const completedCount = langData.completedLessons.length;
-  const totalCount = LESSONS.length;
-  const progressPercent = Math.round((completedCount / totalCount) * 100);
+  // Calculate actual progress for the current language
+  const completedCount = lang ? (progress.languageData[lang]?.completedLessons?.length || 0) : 0;
+  const progressPercent = Math.round((completedCount / LESSONS.length) * 100);
   
-  const nextLesson = LESSONS.find(l => !langData.completedLessons.includes(l.id)) || LESSONS[0];
+  // Calculate actual XP (100 per achievement)
+  const totalXP = progress.unlockedAchievements.length * 100;
 
   return (
-    <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
-      <header className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Welcome Back, Coder!</h1>
-          <p className="text-gray-600">You're making independent progress in {selectedLang}.</p>
-        </div>
-        <div className="bg-white p-4 rounded-2xl border shadow-sm flex items-center gap-4">
-          <div className="text-3xl">{LANGUAGE_DETAILS[selectedLang].icon}</div>
-          <div>
-            <div className="text-sm font-semibold text-gray-400 uppercase tracking-wider">Current Path</div>
-            <div className="font-bold text-gray-900">{selectedLang} Fundamentals</div>
+    <div className="space-y-8 animate-in fade-in duration-700 pb-10">
+      <div className="grid grid-cols-1 gap-6">
+        {/* Statistics Hero - Now Full Width */}
+        <div className="glass rounded-[3rem] p-10 flex flex-col md:flex-row items-center justify-between gap-10 shadow-2xl relative overflow-hidden">
+          <div className="relative z-10 flex-1">
+             <h2 className="text-4xl font-black mb-4">Welcome back, <span className="text-indigo-600">Explorer</span>.</h2>
+             <p className="text-slate-500 font-medium mb-8 leading-relaxed max-w-sm">
+               {lang 
+                 ? `Your ${lang} journey is ${progressPercent}% complete. You've mastered ${completedCount} concepts so far!` 
+                 : "Select a language to begin your journey and track your progress here."}
+             </p>
+             <div className="flex flex-wrap gap-4">
+               <button 
+                 onClick={() => navigate(lang ? '/lessons/intro' : '/select-language')} 
+                 className="bg-indigo-600 text-white px-10 py-4 rounded-2xl font-black shadow-xl shadow-indigo-600/20 hover:scale-105 active:scale-95 transition-all"
+               >
+                 {lang ? 'Continue Mission 🚀' : 'Start Learning ✨'}
+               </button>
+               <div className="bg-white/50 dark:bg-slate-800/50 px-8 py-4 rounded-2xl border border-slate-100 dark:border-slate-800 flex items-center gap-3">
+                 <span className="text-xl">💎</span>
+                 <span className="font-black text-indigo-600">{totalXP} <span className="text-[10px] text-slate-400">XP</span></span>
+               </div>
+             </div>
           </div>
-        </div>
-      </header>
-
-      {/* Progress Overview */}
-      <div className="bg-indigo-600 rounded-3xl p-8 text-white shadow-xl relative overflow-hidden">
-        <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-          <div>
-            <h2 className="text-2xl font-bold mb-2">Overall Progress</h2>
-            <p className="text-indigo-100 mb-6">Complete all lessons in {selectedLang} to earn your mastery badge!</p>
-            <div className="h-4 bg-indigo-400/30 rounded-full mb-2">
-              <div 
-                className="h-full bg-white rounded-full transition-all duration-1000" 
-                style={{ width: `${progressPercent}%` }}
-              />
-            </div>
-            <div className="flex justify-between text-sm font-medium">
-              <span>{progressPercent}% Complete</span>
-              <span>{completedCount} / {totalCount} Lessons</span>
-            </div>
+          
+          <div className="relative z-10 flex flex-col items-center gap-2 bg-white/40 dark:bg-slate-900/40 p-8 rounded-[2.5rem] border border-white dark:border-slate-800 shadow-xl">
+             <div className="text-7xl mb-2 animate-float">🔥</div>
+             <div className="text-5xl font-black">{streak}</div>
+             <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Day Streak</p>
           </div>
-          <div className="flex justify-center md:justify-end">
-            <button 
-              onClick={() => navigate(`/lessons/${nextLesson.id}`)}
-              className="bg-white text-indigo-600 px-8 py-4 rounded-xl font-bold text-lg hover:bg-indigo-50 transition-all shadow-lg active:scale-95"
-            >
-              Continue: {nextLesson.title}
-            </button>
-          </div>
+          
+          <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-purple-500/10 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl"></div>
         </div>
-        <div className="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 bg-white/10 rounded-full blur-3xl" />
       </div>
 
-      {/* Achievements Trophy Room */}
-      <div className="space-y-4">
-        <div className="flex items-center justify-between px-2">
-          <h3 className="text-2xl font-black text-gray-900">Trophy Room</h3>
-          <span className="bg-indigo-100 text-indigo-600 px-3 py-1 rounded-full text-xs font-bold">
-            {unlockedAchievements.length} / {ACHIEVEMENTS.length} Unlocked
-          </span>
+      {/* Main Learning Hub */}
+      {lang ? (
+        <div className="glass rounded-[3rem] p-10 border border-slate-100 dark:border-slate-800 shadow-xl">
+          <div className="flex flex-col md:flex-row items-center justify-between mb-12 gap-6">
+            <div className="flex items-center gap-6">
+              <div className="text-7xl drop-shadow-2xl">{LANGUAGE_DETAILS[lang].icon}</div>
+              <div>
+                <h2 className="text-3xl font-black mb-1">{lang} Specialization</h2>
+                <div className="h-1.5 w-48 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                  <div className="h-full bg-indigo-600 shadow-sm transition-all duration-1000" style={{ width: `${progressPercent}%` }}></div>
+                </div>
+                <p className="text-xs font-bold text-slate-400 mt-2">
+                  {progressPercent === 100 ? 'Course Completed! 🏆' : `Level ${Math.floor(totalXP / 500) + 1} • ${500 - (totalXP % 500)} XP to Next Level`}
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[
+              { label: 'Certificate', icon: '📜', status: progressPercent === 100 ? 'Unlocked' : 'Locked', color: progressPercent === 100 ? 'emerald' : 'slate', path: '#' },
+              { label: 'Flashcards', icon: '🎴', status: `${progress.flashcards.length} Cards`, color: 'indigo', path: '/flashcards' },
+              { label: 'Snippets', icon: '📂', status: `${progress.savedSnippets.length} Saved`, color: 'emerald', path: '/cookbook' },
+              { label: 'Interview', icon: '🎙️', status: 'Available', color: 'rose', path: '/interviewer' }
+            ].map(tool => (
+              <div 
+                key={tool.label} 
+                onClick={() => tool.path !== '#' && navigate(tool.path)}
+                className="group glass p-6 rounded-[2rem] border border-slate-100 dark:border-slate-800 hover:border-indigo-500 hover:-translate-y-1 transition-all cursor-pointer"
+              >
+                <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">{tool.icon}</div>
+                <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">{tool.label}</p>
+                <p className={`text-sm font-black text-${tool.color}-600`}>{tool.status}</p>
+              </div>
+            ))}
+          </div>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-4">
-          {ACHIEVEMENTS.map((ach) => {
-            const isUnlocked = unlockedAchievements.includes(ach.id);
+      ) : (
+        <div className="text-center py-32 glass rounded-[4rem] border-2 border-dashed border-indigo-200 bg-indigo-50/10">
+           <div className="text-8xl mb-8 animate-bounce">🧭</div>
+           <h3 className="text-3xl font-black mb-4">The scroll of destiny awaits.</h3>
+           <p className="text-slate-500 font-medium mb-10">You haven't selected a specialization yet.</p>
+           <button onClick={() => navigate('/select-language')} className="bg-slate-900 text-white px-12 py-5 rounded-2xl font-black shadow-2xl hover:bg-slate-800 transition-all">Begin Selection</button>
+        </div>
+      )}
+
+      {/* Achievement Gallery */}
+      <div className="space-y-6 pt-10">
+        <div className="flex items-center justify-between">
+          <h3 className="text-2xl font-black tracking-tight">Unlocked Relics</h3>
+          <span className="text-xs font-black text-slate-400 uppercase tracking-widest">{progress.unlockedAchievements.length} OF {ACHIEVEMENTS.length}</span>
+        </div>
+        <div className="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-10 gap-4">
+          {ACHIEVEMENTS.map(ach => {
+            const unlocked = progress.unlockedAchievements.includes(ach.id);
             return (
               <div 
-                key={ach.id}
-                className={`
-                  relative group p-4 rounded-2xl border-2 flex flex-col items-center justify-center text-center transition-all duration-300
-                  ${isUnlocked 
-                    ? 'bg-white border-indigo-100 shadow-md hover:scale-105 active:scale-95' 
-                    : 'bg-gray-100 border-dashed border-gray-200 opacity-60 grayscale'}
-                `}
-                title={ach.description}
+                key={ach.id} 
+                className={`aspect-square glass rounded-2xl flex items-center justify-center text-3xl transition-all relative group/ach ${unlocked ? 'shadow-xl shadow-indigo-500/10 hover:scale-110' : 'opacity-20 grayscale scale-90'}`}
               >
-                <div className="text-3xl mb-2 group-hover:animate-bounce">{ach.icon}</div>
-                <div className="text-[10px] font-black uppercase tracking-tight leading-tight line-clamp-1">{ach.title}</div>
-                
-                {/* Tooltip on hover */}
-                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 bg-gray-900 text-white text-[10px] p-2 rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity z-20">
-                  <div className="font-bold mb-1">{ach.title}</div>
-                  <div className="text-gray-400 font-medium">{ach.description}</div>
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 border-8 border-transparent border-t-gray-900" />
+                {ach.icon}
+                <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-[10px] py-1 px-3 rounded-lg opacity-0 group-hover/ach:opacity-100 transition-opacity whitespace-nowrap z-50 pointer-events-none font-bold">
+                  {ach.title}
                 </div>
               </div>
             );
           })}
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="md:col-span-2 space-y-4">
-          <h3 className="text-xl font-bold text-gray-900 px-2">Learning Path ({selectedLang})</h3>
-          <div className="bg-white border rounded-2xl overflow-hidden shadow-sm divide-y">
-            {LESSONS.map((lesson) => {
-              const isCompleted = langData.completedLessons.includes(lesson.id);
-              const score = langData.quizScores[lesson.id];
-              return (
-                <Link
-                  key={lesson.id}
-                  to={`/lessons/${lesson.id}`}
-                  className="flex items-center gap-4 p-5 hover:bg-gray-50 transition-colors group"
-                >
-                  <div className={`
-                    w-12 h-12 rounded-full flex items-center justify-center font-bold transition-all
-                    ${isCompleted ? 'bg-green-100 text-green-600 scale-105' : 'bg-gray-100 text-gray-400'}
-                  `}>
-                    {isCompleted ? '✓' : lesson.order}
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2">
-                      <h4 className="font-bold text-gray-900 group-hover:text-indigo-600 transition-colors">{lesson.title}</h4>
-                      {score !== undefined && (
-                        <span className={`text-[10px] px-2 py-0.5 rounded-full font-black ${score >= 70 ? 'bg-green-50 text-green-600' : 'bg-orange-50 text-orange-600'}`}>
-                          {score}%
-                        </span>
-                      )}
-                    </div>
-                    <p className="text-sm text-gray-500">{lesson.description}</p>
-                  </div>
-                  <div className="text-gray-300 group-hover:text-indigo-400 transition-all translate-x-0 group-hover:translate-x-1">
-                    →
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
-        </div>
-
-        <div className="space-y-6">
-          <div className="bg-yellow-50 border border-yellow-100 p-6 rounded-2xl shadow-sm">
-            <h3 className="text-lg font-bold text-yellow-800 mb-2">💡 Quick Tip</h3>
-            <p className="text-yellow-700 text-sm leading-relaxed">
-              Stuck on a quiz? Try switching to the <strong>Tutor</strong> tab in the lesson. CodeSage can explain the concepts in a different way!
-            </p>
-          </div>
-          
-          <div className="bg-white border p-6 rounded-2xl shadow-sm">
-            <h3 className="text-lg font-bold mb-4">Your Stats ({selectedLang})</h3>
-            <div className="space-y-4">
-              <div className="flex justify-between items-center">
-                <span className="text-gray-500">Quizzes Taken</span>
-                <span className="font-bold">{Object.keys(langData.quizScores).length}</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-gray-500">Average Score</span>
-                <span className="font-bold text-green-600">
-                  {Object.values(langData.quizScores).length > 0 
-                    ? Math.round(Object.values(langData.quizScores).reduce((a, b) => a + b, 0) / Object.values(langData.quizScores).length)
-                    : 0}%
-                </span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-gray-500">Language Proficiency</span>
-                <span className={`font-bold px-2 py-1 rounded text-xs ${progressPercent >= 50 ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600'}`}>
-                  {progressPercent >= 100 ? 'Master' : (progressPercent >= 50 ? 'Intermediate' : 'Beginner')}
-                </span>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>

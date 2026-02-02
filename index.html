@@ -4,48 +4,44 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CodeSage AI</title>
+    <title>CodeSage AI | The Future of Learning</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <style>
+      :root {
+        --glass-bg: rgba(255, 255, 255, 0.7);
+        --glass-border: rgba(255, 255, 255, 0.4);
+        --accent: #6366f1;
+      }
+      .dark {
+        --glass-bg: rgba(15, 23, 42, 0.7);
+        --glass-border: rgba(51, 65, 85, 0.5);
+      }
       body {
-        font-family: 'Inter', sans-serif;
-        scrollbar-gutter: stable both-edges;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        background-attachment: fixed;
+      }
+      .glass {
+        background: var(--glass-bg);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid var(--glass-border);
       }
       .font-mono {
         font-family: 'Fira Code', monospace;
       }
-      
-      /* Global Custom Scrollbar */
-      ::-webkit-scrollbar {
-        width: 6px;
-        height: 6px;
+      .animate-float {
+        animation: float 6s ease-in-out infinite;
       }
-      ::-webkit-scrollbar-track {
-        background: transparent;
+      @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-20px); }
       }
-      ::-webkit-scrollbar-thumb {
-        background: #e2e8f0;
-        border-radius: 10px;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #cbd5e1;
-      }
-      
-      /* For Firefox */
-      * {
-        scrollbar-width: thin;
-        scrollbar-color: #e2e8f0 transparent;
-      }
-
-      /* Utility to hide scrollbars but keep functionality */
-      .no-scrollbar::-webkit-scrollbar {
-        display: none;
-      }
-      .no-scrollbar {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-      }
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar { width: 8px; height: 8px; }
+      ::-webkit-scrollbar-track { background: transparent; }
+      ::-webkit-scrollbar-thumb { background: rgba(99, 102, 241, 0.2); border-radius: 10px; }
+      ::-webkit-scrollbar-thumb:hover { background: rgba(99, 102, 241, 0.4); }
     </style>
   <script type="importmap">
 {
@@ -62,7 +58,7 @@
 }
 </script>
 </head>
-  <body class="bg-gray-50 text-gray-900">
+  <body class="bg-gray-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-500">
     <div id="root"></div>
   </body>
 </html>

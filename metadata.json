@@ -1,5 +1,7 @@
 {
-  "name": "CodeSage AI: Beginner Programming Tutor",
-  "description": "An interactive, AI-powered educational platform designed to help beginners master Python, JavaScript, Java, and C++ through structured lessons, AI-driven explanations, and personalized tutoring.",
-  "requestFramePermissions": []
+  "name": "CodeSage AI: Master Programming",
+  "description": "The ultimate AI-powered coding ecosystem with interactive sandboxes, AI code review, personalized roadmaps, and 24/7 smart tutoring.",
+  "requestFramePermissions": [
+    "camera"
+  ]
 }

@@ -12,6 +12,14 @@ export enum ProgrammingLanguage {
   RUST = 'Rust',
 }
 
+// Added missing Lesson interface as it is used in constants.ts
+export interface Lesson {
+  id: string;
+  title: string;
+  description: string;
+  order: number;
+}
+
 export type AchievementType = 'GLOBAL' | 'LANGUAGE';
 
 export interface Achievement {
@@ -30,22 +38,41 @@ export interface User {
   email?: string;
 }
 
-export interface Lesson {
+export interface SavedSnippet {
   id: string;
   title: string;
-  description: string;
-  order: number;
+  code: string;
+  language: ProgrammingLanguage;
+  timestamp: number;
 }
 
-export interface LanguageProgress {
-  completedLessons: string[];
-  quizScores: Record<string, number>;
+export interface Flashcard {
+  id: string;
+  question: string;
+  answer: string;
+  nextReview: number;
 }
 
 export interface UserProgress {
   selectedLanguage: ProgrammingLanguage | null;
-  languageData: Record<string, LanguageProgress>;
+  languageData: Record<string, {
+    completedLessons: string[];
+    quizScores: Record<string, number>;
+    certificateUnlocked: boolean;
+  }>;
   unlockedAchievements: string[];
+  streak: {
+    current: number;
+    lastLogin: number;
+  };
+  savedSnippets: SavedSnippet[];
+  flashcards: Flashcard[];
+}
+
+export interface AppSettings {
+  darkMode: boolean;
+  language: string;
+  eli5Mode: boolean;
 }
 
 export interface ChatMessage {
@@ -60,7 +87,9 @@ export interface QuizQuestion {
   explanation: string;
 }
 
-export interface Quiz {
-  lessonId: string;
-  questions: QuizQuestion[];
+export interface CodeReviewResult {
+  isBuggy: boolean;
+  explanation: string;
+  suggestions: string[];
+  refactoredCode: string;
 }

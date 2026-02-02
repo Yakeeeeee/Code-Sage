@@ -12,10 +12,17 @@ interface DBUser extends User {
   progress: UserProgress;
 }
 
+// Fixed missing properties in DEFAULT_PROGRESS to match UserProgress interface
 const DEFAULT_PROGRESS: UserProgress = {
   selectedLanguage: null,
   languageData: {},
-  unlockedAchievements: []
+  unlockedAchievements: [],
+  streak: {
+    current: 0,
+    lastLogin: 0,
+  },
+  savedSnippets: [],
+  flashcards: [],
 };
 
 export const MockDB = {
