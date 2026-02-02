@@ -10,22 +10,24 @@
     <style>
       :root {
         --glass-bg: rgba(255, 255, 255, 0.7);
-        --glass-border: rgba(255, 255, 255, 0.4);
+        --glass-border: rgba(255, 255, 255, 0.5);
         --accent: #6366f1;
       }
       .dark {
-        --glass-bg: rgba(15, 23, 42, 0.7);
-        --glass-border: rgba(51, 65, 85, 0.5);
+        --glass-bg: rgba(15, 23, 42, 0.75);
+        --glass-border: rgba(255, 255, 255, 0.1);
       }
       body {
         font-family: 'Plus Jakarta Sans', sans-serif;
         background-attachment: fixed;
+        transition: background-color 0.5s ease, color 0.5s ease;
       }
       .glass {
         background: var(--glass-bg);
         backdrop-filter: blur(16px);
         -webkit-backdrop-filter: blur(16px);
         border: 1px solid var(--glass-border);
+        transition: background 0.5s ease, border 0.5s ease;
       }
       .font-mono {
         font-family: 'Fira Code', monospace;
@@ -42,6 +44,11 @@
       ::-webkit-scrollbar-track { background: transparent; }
       ::-webkit-scrollbar-thumb { background: rgba(99, 102, 241, 0.2); border-radius: 10px; }
       ::-webkit-scrollbar-thumb:hover { background: rgba(99, 102, 241, 0.4); }
+      
+      .perspective-1000 { perspective: 1000px; }
+      .transform-style-3d { transform-style: preserve-3d; }
+      .backface-hidden { backface-visibility: hidden; }
+      .rotate-y-180 { transform: rotateY(180deg); }
     </style>
   <script type="importmap">
 {
@@ -58,7 +65,7 @@
 }
 </script>
 </head>
-  <body class="bg-gray-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-500">
+  <body class="bg-gray-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100">
     <div id="root"></div>
   </body>
 </html>

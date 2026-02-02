@@ -3,26 +3,26 @@ import React from 'react';
 
 const AboutPage: React.FC = () => {
   return (
-    <div className="max-w-4xl mx-auto space-y-12 py-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
+    <div className="max-w-4xl mx-auto space-y-12 py-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
       <section className="text-center space-y-4">
-        <div className="text-6xl mb-6 inline-block">🎓</div>
-        <h1 className="text-4xl font-black text-gray-900 tracking-tight">About CodeSage AI</h1>
-        <p className="text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto">
-          Empowering the next generation of developers through intelligent, personalized, and accessible programming education.
+        <div className="text-7xl mb-6 inline-block animate-float">🎓</div>
+        <h1 className="text-5xl font-black tracking-tight">About CodeSage AI</h1>
+        <p className="text-xl text-slate-500 dark:text-slate-400 leading-relaxed max-w-2xl mx-auto font-medium">
+          Empowering the next generation of developers through intelligent, personalized programming education.
         </p>
       </section>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="bg-white p-8 rounded-3xl border shadow-sm">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Our Mission</h2>
-          <p className="text-gray-600 leading-relaxed">
-            We believe that learning to code shouldn't be intimidating. CodeSage AI leverages the latest advancements in Artificial Intelligence to provide a tutor that never sleeps, never loses patience, and always speaks your language. 
+        <div className="glass p-10 rounded-[3rem] border border-slate-100 dark:border-white/10 shadow-xl">
+          <h2 className="text-2xl font-black mb-4">Our Mission</h2>
+          <p className="text-slate-500 dark:text-slate-400 leading-relaxed">
+            We believe learning to code shouldn't be intimidating. CodeSage AI leverages Gemini's reasoning to provide a tutor that never sleeps, never loses patience, and always adapts to your level.
           </p>
         </div>
-        <div className="bg-white p-8 rounded-3xl border shadow-sm">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">How it Works</h2>
-          <p className="text-gray-600 leading-relaxed">
-            By combining a structured curriculum with Gemini's reasoning capabilities, we create a dynamic learning environment that adapts to your unique questions and pace.
+        <div className="glass p-10 rounded-[3rem] border border-slate-100 dark:border-white/10 shadow-xl">
+          <h2 className="text-2xl font-black mb-4">How it Works</h2>
+          <p className="text-slate-500 dark:text-slate-400 leading-relaxed">
+            By combining a structured curriculum with generative AI, we create a dynamic environment that answers your specific "Why?" and "How?" questions in real-time.
           </p>
         </div>
       </div>
@@ -30,9 +30,9 @@ const AboutPage: React.FC = () => {
       <section className="bg-indigo-600 rounded-[3rem] p-10 md:p-16 text-white text-center shadow-2xl relative overflow-hidden">
         <div className="relative z-10 space-y-8">
           <div className="space-y-4">
-            <h2 className="text-3xl md:text-4xl font-black">Relax & Level Up with Mr. Yakeee</h2>
+            <h2 className="text-3xl md:text-4xl font-black">Relax with Mr. Yakeee</h2>
             <p className="text-indigo-100 text-lg md:text-xl max-w-xl mx-auto leading-relaxed">
-              Finished your coding session? Take a break and check out our partner for epic gaming highlights, entertainment, and top-tier gameplay content.
+              Finished coding? Take a break with our partner for top-tier gaming highlights and entertainment.
             </p>
           </div>
           
@@ -47,19 +47,15 @@ const AboutPage: React.FC = () => {
             </svg>
             Watch Mr. Yakeee
           </a>
-          
-          <div className="text-indigo-200 text-sm font-medium">
-            Gaming & Entertainment: youtube.com/@mr.yakeee
-          </div>
         </div>
         
-        {/* Decorative Circles */}
+        {/* Decorative background blur */}
         <div className="absolute -top-20 -left-20 w-64 h-64 bg-white/10 rounded-full blur-3xl" />
         <div className="absolute -bottom-20 -right-20 w-80 h-80 bg-indigo-400/20 rounded-full blur-3xl" />
       </section>
 
-      <footer className="text-center text-gray-400 text-sm py-8">
-        <p>&copy; {new Date().getFullYear()} CodeSage AI. All rights reserved.</p>
+      <footer className="text-center text-slate-400 text-xs py-8 font-bold uppercase tracking-widest">
+        <p>&copy; {new Date().getFullYear()} CodeSage AI. Built with Gemini 3.</p>
       </footer>
     </div>
   );

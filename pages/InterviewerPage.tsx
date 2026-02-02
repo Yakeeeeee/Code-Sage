@@ -49,28 +49,28 @@ const InterviewerPage: React.FC<{ progress: UserProgress }> = ({ progress }) => 
   };
 
   return (
-    <div className="flex flex-col h-full space-y-6 pb-20 md:pb-0">
+    <div className="flex flex-col h-full space-y-6 pb-20 md:pb-0 animate-in fade-in duration-700">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-4xl font-black tracking-tight">AI Interviewer 🎙️</h1>
-          <p className="text-gray-500 font-bold">Roleplay mock technical interviews.</p>
+          <p className="text-slate-500 dark:text-slate-400 font-bold">Roleplay mock technical interviews.</p>
         </div>
-        <button onClick={() => setMessages([])} className="text-sm font-bold text-red-500 hover:bg-red-50 px-4 py-2 rounded-xl transition-colors">Reset Room</button>
+        <button onClick={() => setMessages([])} className="text-sm font-bold text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-900/20 px-4 py-2 rounded-xl transition-colors">Reset Room</button>
       </div>
 
-      <div className="flex-1 bg-white dark:bg-gray-900 border dark:border-gray-800 rounded-[2.5rem] flex flex-col overflow-hidden shadow-sm h-[600px]">
+      <div className="flex-1 glass rounded-[2.5rem] flex flex-col overflow-hidden shadow-sm h-[600px]">
         {/* Chat Area */}
         <div className="flex-1 overflow-y-auto p-6 space-y-6 no-scrollbar">
           {messages.map((msg, i) => (
             <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} animate-in slide-in-from-bottom-2 duration-300`}>
-              <div className={`max-w-[85%] p-6 rounded-[2rem] text-lg leading-relaxed ${msg.role === 'user' ? 'bg-indigo-600 text-white shadow-xl rounded-tr-none' : 'bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-tl-none'}`}>
+              <div className={`max-w-[85%] p-6 rounded-[2rem] text-lg leading-relaxed shadow-lg ${msg.role === 'user' ? 'bg-indigo-600 text-white rounded-tr-none' : 'glass rounded-tl-none dark:bg-slate-800/80 text-slate-900 dark:text-slate-100'}`}>
                 {msg.content}
               </div>
             </div>
           ))}
           {isTyping && (
             <div className="flex justify-start">
-              <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-[2rem] rounded-tl-none flex gap-2">
+              <div className="glass p-4 rounded-[2rem] rounded-tl-none flex gap-2">
                 <div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce"></div>
                 <div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce delay-100"></div>
                 <div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce delay-200"></div>
@@ -81,14 +81,14 @@ const InterviewerPage: React.FC<{ progress: UserProgress }> = ({ progress }) => 
         </div>
 
         {/* Input Area */}
-        <div className="p-6 bg-gray-50 dark:bg-gray-800/50 border-t dark:border-gray-800">
+        <div className="p-6 bg-slate-50 dark:bg-slate-900/50 border-t border-slate-100 dark:border-slate-800">
           <form onSubmit={handleSend} className="relative flex items-center">
             <input 
               type="text" 
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Speak your mind, candidate..."
-              className="w-full bg-white dark:bg-gray-900 border-2 border-gray-100 dark:border-gray-800 p-5 pr-20 rounded-2xl font-bold outline-none focus:border-indigo-600 transition-all shadow-sm"
+              className="w-full glass bg-white dark:bg-slate-900 p-5 pr-20 rounded-2xl font-bold outline-none focus:border-indigo-600 transition-all shadow-sm"
             />
             <button 
               type="submit" 
@@ -98,7 +98,7 @@ const InterviewerPage: React.FC<{ progress: UserProgress }> = ({ progress }) => 
               🚀
             </button>
           </form>
-          <p className="text-center text-[10px] font-black text-gray-400 uppercase tracking-widest mt-4">Simulation Active • Powered by Gemini 3</p>
+          <p className="text-center text-[10px] font-black text-slate-400 uppercase tracking-widest mt-4">Simulation Active • Powered by Gemini 3</p>
         </div>
       </div>
     </div>

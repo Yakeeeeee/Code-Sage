@@ -8,6 +8,7 @@ import LanguageSelection from './pages/LanguageSelection';
 import LessonPage from './pages/LessonPage';
 import Dashboard from './pages/Dashboard';
 import AboutPage from './pages/AboutPage';
+import SettingsPage from './pages/SettingsPage';
 import FlashcardsPage from './pages/FlashcardsPage';
 import CookbookPage from './pages/CookbookPage';
 import InterviewerPage from './pages/InterviewerPage';
@@ -82,8 +83,9 @@ const App: React.FC = () => {
           <Route path="/flashcards" element={user ? <FlashcardsPage progress={progress} updateProgress={updateProgress} /> : <Navigate to="/auth" />} />
           <Route path="/cookbook" element={user ? <CookbookPage progress={progress} updateProgress={updateProgress} /> : <Navigate to="/auth" />} />
           <Route path="/interviewer" element={user ? <InterviewerPage progress={progress} /> : <Navigate to="/auth" />} />
-          <Route path="/select-language" element={<LanguageSelection onSelect={(l) => setProgress(p => ({...p, selectedLanguage: l}))} />} />
+          <Route path="/settings" element={user ? <SettingsPage user={user} settings={settings} onSettingsChange={setSettings} progress={progress} /> : <Navigate to="/auth" />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/select-language" element={<LanguageSelection onSelect={(l) => setProgress(p => ({...p, selectedLanguage: l}))} />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Layout>
